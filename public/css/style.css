@@ -1,0 +1,58 @@
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+body {
+    color: #404E67;
+    background: #F5F7FA;
+    font-family: 'Nunito', sans-serif;
+}
+
+.material-icons.red {
+    color: rgb(227, 71, 36);
+}
+
+.material-icons.yellow {
+    color: rgb(255, 193, 7);
+}
+
+.material-icons.green {
+    color: rgb(39, 196, 107);
+}
+
+.material-icons.cursor-pointer {
+    cursor: pointer;
+}
+
+table.table td #add {
+    display: none;
+}
+
+.actions-td {
+    width: 100px;
+    text-align: center;
+}
+
+#icon {
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.navbar-brand span {
+    font-size: 20px;
+}
+
+.card-custom-icon {
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(10, 10, 10, 0.3);
+    top: 80px;
+    left: 1.25rem;
+    width: 80px;
+    height: 80px;
+}
+
+#dashboard-card{
+    text-decoration: none;
+}
+.card-custom-icon .material-icons {
+    font-size: 50px;
+    user-select: none;
+}
