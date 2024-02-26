@@ -1,4 +1,13 @@
 $(document).ready(() => {
+
+    new DataTable('table[data-table]', {
+        layout: {
+            topStart: {
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            }
+        }
+    });
+
     function validateInputs(inputs) {
         let error = false;
         let inputValues = {};

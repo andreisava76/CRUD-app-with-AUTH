@@ -1,6 +1,6 @@
 @props(['users'])
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" data-table>
         <thead class="table-primary">
         <tr>
             <th>{{ __('Name') }}</th>
@@ -30,4 +30,3 @@
         </tbody>
     </table>
 </div>
-{{$users->links()}}

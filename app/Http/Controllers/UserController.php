@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index(): View|Factory|Application|RedirectResponse
     {
-        $users = User::query()->paginate(15);
+        $users = User::query()->get();
 
         return view('users.index',
             compact('users'),
