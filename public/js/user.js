@@ -1,12 +1,46 @@
 $(document).ready(() => {
-
-    new DataTable('table[data-table]', {
-        layout: {
-            topStart: {
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+    if (isAdmin) {
+        new DataTable('table[data-table]', {
+            processing: true,
+            serverSide: true,
+            ajax: usersRoute,
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                }
+            },
+            columns: [
+                {data: 'name', name: 'name'},
+                {data: 'email', name: 'email'},
+                {data: 'actions', name: 'actions', orderable: false, searchable: false},
+            ],
+            "fnInitComplete": function() {
+                $('[data-toggle="tooltip"]').tooltip();
+                $(() => {
+                    $('a#delete').addDeleteEvent();
+                    $('a#edit').addEditEvent();
+                });
             }
-        }
-    });
+        });
+    } else {
+        new DataTable('table[data-table]', {
+            processing: true,
+            serverSide: true,
+            ajax: usersRoute,
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                }
+            },
+            columns: [
+                {data: 'name', name: 'name'},
+                {data: 'email', name: 'email'},
+            ],
+            "fnInitComplete": function() {
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        });
+    }
 
     function validateInputs(inputs) {
         let error = false;
@@ -25,14 +59,6 @@ $(document).ready(() => {
 
         return error ? false : inputValues;
     }
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-    $(() => {
-        $('a#delete').addDeleteEvent();
-        $('a#edit').addEditEvent();
-    });
-
 
     (($) => {
         $.fn.extend({

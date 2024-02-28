@@ -3,25 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+
     /**
-     * @return View|Factory|Application|RedirectResponse
+     * @param Request $request
+     * @return Application|Factory|View|JsonResponse
+     * @throws Exception
      */
-    public function index(): View|Factory|Application|RedirectResponse
+    public function index(Request $request): View|Factory|JsonResponse|Application
     {
-        $users = User::query()->get();
+        if ($request->ajax()) {
+            $users = User::query()->get();
+            if (auth()->user()->can('admin')) {
+                return Datatables::of($users)
+                    ->addColumn('actions', function ($user) {
+                        $actionBtn = '<a id="add" title="Add" data-toggle="tooltip" data-id='. $user->id .'><i class="material-icons green cursor-pointer p-1">&#xE03B;</i></a>
+                                      <a id="edit" title="Edit" data-toggle="tooltip" data-id='. $user->id .'><i class="material-icons yellow cursor-pointer p-1">&#xE254;</i></a>
+                                      <a id="delete" title="Delete" data-toggle="tooltip" data-id='. $user->id .'><i class="material-icons red cursor-pointer p-1">&#xE872;</i></a>';
+                        return $actionBtn;
+                    })
+                    ->rawColumns(['actions'])
+                    ->make(true);
+            } else {
+                return Datatables::of($users)
+                    ->make(true);
+            }
+        }
 
         return view('users.index',
-            compact('users'),
             ['inputs' => [
                 ['name' => 'name'],
                 ['name' => 'email']
