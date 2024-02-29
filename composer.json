@@ -6,12 +6,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.8",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "laravel/vonage-notification-channel": "^3.3",
         "yajra/laravel-datatables-oracle": "^10"
     },
     "require-dev": {

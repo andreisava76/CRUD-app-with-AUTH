@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\VerifyMobileController;
 use App\Http\Controllers\AuthOtpController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\UserController;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(["verify" => true]);
 
-Route::group(["prefix" => "user", "as" => "user.", "middleware" => "auth", "controller" => UserController::class], function () {
+Route::group(["prefix" => "user", "as" => "user.", "middleware" => ["auth","verify.mobile"], "controller" => UserController::class], function () {
     Route::get('/', 'index')->name('index');
     Route::get('create', 'create')->name('create')->middleware('can:admin');
     Route::post('/', 'store')->name('store')->middleware('can:admin');
@@ -44,3 +45,9 @@ Route::group(["prefix" => "otp", "as" => "otp.", "controller" => AuthOtpControll
     Route::get('login', 'login')->name('login');
     Route::post('generate', 'generate')->name('generate');
 });
+
+Route::post('verify-mobile', [VerifyMobileController::class, '__invoke'])
+    ->middleware(['throttle:6,1'])
+    ->name('verification.verify-mobile');
+
+Route::view('verify-mobile','auth.verify-mobile')->name('verification-mobile.notice');
