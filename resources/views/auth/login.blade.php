@@ -69,11 +69,6 @@
                                 <a href="{{ route('auth.google') }}">{{ __('Login using Google') }}</a>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-8 offset-md-4">
-                                <a href="{{ route('otp.login') }}">{{ __('Login with OTP') }}</a>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>

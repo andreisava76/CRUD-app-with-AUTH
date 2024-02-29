@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\VerifyMobileController;
-use App\Http\Controllers\AuthOtpController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\UserController;
 use App\Providers\RouteServiceProvider;
@@ -40,11 +39,6 @@ Route::get('/logout', function () {
 
 Route::get('auth/google', [GoogleController::class, 'google_page'])->name('auth.google');
 Route::get('auth/google/callback', [GoogleController::class, 'google_callback']);
-
-Route::group(["prefix" => "otp", "as" => "otp.", "controller" => AuthOtpController::class], function () {
-    Route::get('login', 'login')->name('login');
-    Route::post('generate', 'generate')->name('generate');
-});
 
 Route::post('verify-mobile', [VerifyMobileController::class, '__invoke'])
     ->middleware(['throttle:6,1'])
