@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Carbon\Carbon;
-use Twilio\Rest\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Twilio\Exceptions\TwilioException;
 use App\Providers\RouteServiceProvider;
-use Twilio\Exceptions\ConfigurationException;
 
 class VerifyMobileController extends Controller
 {
