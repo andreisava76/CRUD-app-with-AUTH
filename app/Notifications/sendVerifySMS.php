@@ -2,8 +2,9 @@
 
 namespace App\Notifications;
 
-use Illuminate\Notifications\Messages\VonageMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Smso\SmsoChannel;
+use NotificationChannels\Smso\SmsoMessage;
 
 class sendVerifySMS extends Notification
 {
@@ -14,14 +15,15 @@ class sendVerifySMS extends Notification
 
     public function via($notifiable): array
     {
-        return ['vonage'];
+        return [SmsoChannel::class];
     }
 
-    public function toVonage($notifiable): VonageMessage
+    public function toSmso($notifiable): SmsoMessage
     {
-
-        return (new VonageMessage())
-            ->content("Your verification code is {$notifiable->mobile_verify_code}");
+        return (new SmsoMessage())
+            ->content("Your verification code is {$notifiable->mobile_verify_code}")
+            ->from('4')
+            ->to($notifiable->mobile_number);
     }
 
     public function toArray($notifiable): array

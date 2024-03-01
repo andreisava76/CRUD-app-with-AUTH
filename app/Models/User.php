@@ -54,7 +54,7 @@ class User extends Authenticatable implements IMustVerifyMobile
         'mobile_last_attempt_date' => 'datetime'
     ];
 
-    public function routeNotificationForVonage($notification)
+    public function routeNotificationForSmso($notification)
     {
         return $this->mobile_number;
     }

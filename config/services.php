@@ -34,5 +34,8 @@ return [
         'client_id' => '985983454955-be4uqeidurpbbqjjug246sdumklubn9k.apps.googleusercontent.com',
         'client_secret' => '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',
         'redirect' => 'http://127.0.0.1:8000/auth/google/callback'
+    ],
+    'smso' => [
+        'api_key' => env('SMSO_KEY'),
     ]
 ];
