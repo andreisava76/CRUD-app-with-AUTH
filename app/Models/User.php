@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\MustVerifyEmail;
 use App\Traits\MustVerifyMobile;
 use App\Traits\UuidTrait;
-use App\Interfaces\MustVerifyMobile as IMustVerifyMobile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements IMustVerifyMobile
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, UuidTrait;
-    use MustVerifyMobile;
 
     /**
      * The attributes that are mass assignable.
@@ -23,12 +22,14 @@ class User extends Authenticatable implements IMustVerifyMobile
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
         'mobile_number',
-        'mobile_verify_code',
-        'mobile_attempts_left',
-        'mobile_last_attempt_date',
-        'mobile_verify_code_sent_at',
+        'mobile_verified_at',
+        'verification_code',
+        'verification_code_sent_at',
+        'attempts_left',
+        'last_attempt_date',
         'google_id',
     ];
 
@@ -49,9 +50,9 @@ class User extends Authenticatable implements IMustVerifyMobile
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'number_verified_at' => 'datetime',
-        'mobile_verify_code_sent_at' => 'datetime',
-        'mobile_last_attempt_date' => 'datetime'
+        'mobile_verified_at' => 'datetime',
+        'verification_code_sent_at' => 'datetime',
+        'last_attempt_date' => 'datetime'
     ];
 
     public function routeNotificationForSmso($notification)

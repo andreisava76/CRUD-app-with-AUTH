@@ -13,6 +13,7 @@
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "opcodesio/log-viewer": "^3.5",
         "yajra/laravel-datatables-oracle": "^10"
     },
     "require-dev": {

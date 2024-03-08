@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -14,12 +13,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-           $table->string('mobile_number')->nullable()->after('email');
-           $table->timestamp('mobile_verified_at')->nullable()->after('mobile_number');
-           $table->string('mobile_verify_code')->nullable()->after('mobile_verified_at');
-            $table->tinyInteger('mobile_attempts_left')->default(0)->after('mobile_verify_code');
-            $table->timestamp('mobile_last_attempt_date')->nullable()->after('mobile_attempts_left');
-            $table->timestamp('mobile_verify_code_sent_at')->nullable()->after('mobile_last_attempt_date');
+            $table->string('mobile_number')->nullable()->after('email_verified_at');
+            $table->timestamp('mobile_verified_at')->nullable()->after('mobile_number');
+            $table->string('verification_code')->nullable()->after('mobile_verified_at');
+            $table->timestamp('verification_code_sent_at')->nullable()->after('verification_code');
+            $table->tinyInteger('attempts_left')->default(0)->after('verification_code_sent_at');
+            $table->timestamp('last_attempt_date')->nullable()->after('attempts_left');
         });
     }
 
@@ -33,10 +32,10 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('mobile_number');
             $table->dropColumn('mobile_verified_at');
-            $table->dropColumn('mobile_verify_code');
-            $table->dropColumn('mobile_attempts_left');
-            $table->dropColumn('mobile_last_attempt_date');
-            $table->dropColumn('mobile_verify_code_sent_at');
+            $table->dropColumn('verification_code');
+            $table->dropColumn('verification_code_sent_at');
+            $table->dropColumn('attempts_left');
+            $table->dropColumn('last_attempt_date');
         });
     }
 };
