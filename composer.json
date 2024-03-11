@@ -2,11 +2,14 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "andrei76/smso-service": "dev-master",
+        "atw/otp": "dev-master",
         "dcblogdev/laravel-microsoft-graph": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
         "laravel/framework": "^9.19",
@@ -34,6 +37,21 @@
             "Database\\Seeders\\": "database/seeders/"
         }
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "atw/otp",
+                "version": "dev-master",
+                "type": "package",
+                "source": {
+                    "url": "https://github.com/andreisava76/atw-otp",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
@@ -60,6 +78,9 @@
         }
     },
     "config": {
+        "github-oauth": {
+            "github.com": "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"
+        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
