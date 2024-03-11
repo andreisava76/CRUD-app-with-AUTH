@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Events\RegisteredWithEmail;
 use App\Mail\VerificationCodeMail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -77,21 +76,13 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $verification_code = random_int(111111, 999999);
-
         if ($data['verificationCodeCheck'] === 'emailCheck') {
-//            event(new RegisteredWithEmail($user));
-            $user_email=$data['email'];
-            $user_name=$data['name'];
-
-            Mail::to($user_email)->send(new VerificationCodeMail($user_email, $verification_code, $user_name));
-            $user->forceFill([
-                'verification_code' => random_int(111111, 999999),
-                'attempts_left' => config('verification.max_attempts'),
-                'verification_code_sent_at' => now(),
-            ])->save();
+            $verification_code = random_int(111111, 999999);
+            $user_email = $data['email'];
+            $user_name = $data['name'];
+            $user->sendEmailVerification($user_email, $verification_code, $user_name);
         } else if ($data['verificationCodeCheck'] === 'smsCheck') {
-//            event(new Registered($user));
+            $user->sendMobileVerificationNotification(true);
         }
 
         return $user;

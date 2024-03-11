@@ -6,15 +6,11 @@ use App\Http\Controllers\Controller;
 use Dcblogdev\MsGraph\Facades\MsGraph;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class MicrosoftLoginController extends Controller
 {
     public function connect()
     {
         return MsGraph::connect();
     }
 
-    public function logout()
-    {
-        return MsGraph::disconnect('/');
-    }
 }

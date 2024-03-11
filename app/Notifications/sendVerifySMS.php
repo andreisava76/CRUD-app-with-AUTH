@@ -21,7 +21,7 @@ class sendVerifySMS extends Notification
     public function toSmso($notifiable): SmsoMessage
     {
         return (new SmsoMessage())
-            ->content("Your verification code is {$notifiable->mobile_verify_code}")
+            ->content("Your verification code is {$notifiable->verification_code}")
             ->from('4')
             ->to('4' . $notifiable->mobile_number);
     }

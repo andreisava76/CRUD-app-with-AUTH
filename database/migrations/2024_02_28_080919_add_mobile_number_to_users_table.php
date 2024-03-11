@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->timestamp('verification_code_sent_at')->nullable()->after('verification_code');
             $table->tinyInteger('attempts_left')->default(0)->after('verification_code_sent_at');
             $table->timestamp('last_attempt_date')->nullable()->after('attempts_left');
+            $table->string('preffered_verification_method')->nullable()->after('last_attempt_date');
         });
     }
 
@@ -36,6 +37,7 @@ return new class extends Migration {
             $table->dropColumn('verification_code_sent_at');
             $table->dropColumn('attempts_left');
             $table->dropColumn('last_attempt_date');
+            $table->dropColumn('preffered_verification_method');
         });
     }
 };

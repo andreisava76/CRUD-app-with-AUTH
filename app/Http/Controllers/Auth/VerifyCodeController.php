@@ -6,22 +6,22 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 
-class VerifyMobileController extends Controller
+class VerifyCodeController extends Controller
 {
     public function __invoke(Request $request)
     {
         //Redirect user to home if mobile already verified
-        if ($request->user()->hasVerifiedMobile()) return redirect()->to(RouteServiceProvider::HOME);
+        if ($request->user()->email_verified_at || $request->user()->mobile_verified_at) return redirect()->to(RouteServiceProvider::HOME);
 
         $request->validate([
             'code' => ['required', 'numeric'],
         ]);
 
         // Code correct
-        if ($request->code === auth()->user()->mobile_verify_code) {
+        if ($request->code === auth()->user()->verification_code) {
             // check if code is still valid
-            $secondsOfValidation = (int) config('mobile.seconds_of_validation');
-            if ($secondsOfValidation > 0 &&  $request->user()->mobile_verify_code_sent_at->diffInSeconds() > $secondsOfValidation) {
+            $secondsOfValidation = (int) config('verification.seconds_of_validation');
+            if ($secondsOfValidation > 0 &&  $request->user()->verification_code_sent_at->diffInSeconds() > $secondsOfValidation) {
                 $request->user()->sendMobileVerificationNotification(true);
                 return back()->withErrors(['error' => __('mobile.expired')]);
             }else {
@@ -31,12 +31,12 @@ class VerifyMobileController extends Controller
         }
 
         // Max attempts feature
-        if (config('mobile.max_attempts') > 0) {
-            if ($request->user()->mobile_attempts_left <= 1) {
-                if($request->user()->mobile_attempts_left == 1) $request->user()->decrement('mobile_attempts_left');
+        if (config('verification.max_attempts') > 0) {
+            if ($request->user()->attempts_left <= 1) {
+                if($request->user()->attempts_left == 1) $request->user()->decrement('attempts_left');
 
                 //check how many seconds left to get unbanned after no more attempts left
-                $seconds_left = (int) config('mobile.attempts_ban_seconds') - $request->user()->mobile_last_attempt_date->diffInSeconds();
+                $seconds_left = (int) config('verification.attempts_ban_seconds') - $request->user()->last_attempt_date->diffInSeconds();
                 if ($seconds_left > 0) {
                     return back()->withErrors(['error' => __('mobile.error_wait', ['seconds' => $seconds_left])]);
                 }
@@ -46,9 +46,9 @@ class VerifyMobileController extends Controller
                 return back()->withErrors(['error' => __('mobile.new_code')]);
             }
 
-            $request->user()->decrement('mobile_attempts_left');
-            $request->user()->update(['mobile_last_attempt_date' => now()]);
-            return back()->withErrors(['error' => __('mobile.error_with_attempts', ['attempts' => $request->user()->mobile_attempts_left])]);
+            $request->user()->decrement('attempts_left');
+            $request->user()->update(['last_attempt_date' => now()]);
+            return back()->withErrors(['error' => __('mobile.error_with_attempts', ['attempts' => $request->user()->attempts_left])]);
         }
 
         return back()->withErrors(['error' => __('mobile.error_code')]);

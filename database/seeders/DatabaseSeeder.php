@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'name'=>'admin',
             'email'=>'admin@test.com',
             'password'=> Hash::make('password'),
-            'mobile_verified_at' => now()
+            'verification_code' => '111111'
         ]);
 
          User::factory(30)->create();

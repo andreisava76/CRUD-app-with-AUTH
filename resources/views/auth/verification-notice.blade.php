@@ -9,13 +9,16 @@
 
                     <div class="card-body">
                         <div class="alert alert-success" role="alert">
-                            {{ __('Thanks for signing up! Before getting started, you need to verify your mobile phone number.') }}
+                            {{ __('Thanks for signing up! Before getting started, you need to verify your ') }} @if(auth()->user()->preffered_verification_method === 'email') email adress @else mobile number @endif
                         </div>
                         <div>
-                            {{ __('Please enter the OTP sent to your number:') }} {{ auth()->user()->mobile_number }}
+                            {{ __('Please enter the OTP sent to your ') }} @if(auth()->user()->preffered_verification_method === 'email') email adress: {{ auth()->user()->email }} @else mobile number: {{ auth()->user()->mobile_number }} @endif
+                            @if(Session::has('errors'))
+                                {{Session::get('errors')}};
+                            @endif
                         </div>
                         <div class="mt-4 items-center justify-between">
-                            <form method="POST" action="{{ route('verification.verify-mobile') }}">
+                            <form method="POST" action="{{ route('verification.verify') }}">
                                 @csrf
                                 <div class="row mb-3">
                                     <label for="code"

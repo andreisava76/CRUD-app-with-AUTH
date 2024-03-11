@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\VerifyMobileController;
-use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\Auth\GoogleLoginController;
+use App\Http\Controllers\Auth\MicrosoftLoginController;
+use App\Http\Controllers\Auth\VerifyCodeController;
 use App\Http\Controllers\UserController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(["verify" => true]);
 
-Route::group(["prefix" => "user", "as" => "user.", "middleware" => ["auth","verify.mobile"], "controller" => UserController::class], function () {
+Route::group(["prefix" => "user", "as" => "user.", "middleware" => ["auth","verify.code"], "controller" => UserController::class], function () {
     Route::get('/', 'index')->name('index');
     Route::get('create', 'create')->name('create')->middleware('can:admin');
     Route::post('/', 'store')->name('store')->middleware('can:admin');
@@ -38,23 +38,13 @@ Route::get('/logout', function () {
     return Redirect::to(RouteServiceProvider::HOME);
 });
 
-Route::get('auth/google', [GoogleController::class, 'google_page'])->name('auth.google');
-Route::get('auth/google/callback', [GoogleController::class, 'google_callback']);
+Route::get('auth/google', [GoogleLoginController::class, 'google_page'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleLoginController::class, 'google_callback']);
 
-Route::get('auth/microsoft', [AuthController::class, 'connect'])->name('auth.microsoft');
+Route::get('auth/microsoft', [MicrosoftLoginController::class, 'connect'])->middleware(['web', 'guest'])->name('auth.microsoft');
 
-Route::post('verify-mobile', [VerifyMobileController::class, '__invoke'])
+Route::post('verify', [VerifyCodeController::class, '__invoke'])
     ->middleware(['throttle:6,1'])
-    ->name('verification.verify-mobile');
+    ->name('verification.verify');
 
-Route::view('verify-mobile','auth.verify-mobile')->name('verification-mobile.notice');
-
-
-
-Route::group(['middleware' => ['web', 'guest'], 'namespace' => 'App\Http\Controllers'], function(){
-    Route::get('auth.microsoft', 'AuthController@connect')->name('connect');
-});
-
-Route::group(['middleware' => ['web', 'MsGraphAuthenticated'], 'prefix' => 'app', 'namespace' => 'App\Http\Controllers'], function(){
-    Route::get('logout', 'Auth\AuthController@logout')->name('logout');
-});
+Route::view('verification-notice','auth.verification-notice')->name('verification.notice');

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Exception;
 
-class GoogleController extends Controller
+class GoogleLoginController extends Controller
 {
     /**
      * @return RedirectResponse
