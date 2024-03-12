@@ -1,5 +1,6 @@
 <?php
 
+use App\NotificationChannel\SmsoServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -181,12 +182,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        \NotificationChannels\Smso\SmsoServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
+        SmsoServiceProvider::class,
 
         /*
          * Application Service Providers...

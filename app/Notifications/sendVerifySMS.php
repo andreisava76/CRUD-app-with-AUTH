@@ -2,9 +2,9 @@
 
 namespace App\Notifications;
 
+use App\NotificationChannel\SmsoChannel;
+use App\NotificationChannel\SmsoMessage;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\Smso\SmsoChannel;
-use NotificationChannels\Smso\SmsoMessage;
 
 class sendVerifySMS extends Notification
 {

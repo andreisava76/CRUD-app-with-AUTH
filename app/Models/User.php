@@ -4,8 +4,6 @@ namespace App\Models;
 
 use App\Mail\VerificationCodeMail;
 use App\Notifications\sendVerifySMS;
-use App\Traits\MustVerifyEmail;
-use App\Traits\MustVerifyMobile;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -121,7 +119,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @throws Exception
+     * @param $user_email
+     * @param $verification_code
+     * @param $user_name
+     * @return void
      */
     public function sendEmailVerification($user_email, $verification_code, $user_name): void
     {
