@@ -3,7 +3,11 @@
          data-autohide="false">
         <div class="d-flex">
             <div class="toast-body">
-                {{ session('success') }}
+                @if(Session::has('errors'))
+                    {{ Session::get('errors') }};
+                @elseif(Session::has('success'))
+                    {{ Session::get('success') }};
+                @endif
             </div>
             <button type="button" class="btn-close position-absolute top-50 end-0 translate-middle-y me-4"
                     data-bs-dismiss="toast" aria-label="Close"></button>

@@ -13,9 +13,6 @@
                         </div>
                         <div>
                             {{ __('Please enter the OTP sent to your ') }} @if(auth()->user()->preffered_verification_method === 'email') email adress: {{ auth()->user()->email }} @else mobile number: {{ auth()->user()->mobile_number }} @endif
-                            @if(Session::has('errors'))
-                                {{Session::get('errors')}};
-                            @endif
                         </div>
                         <div class="mt-4 items-center justify-between">
                             <form method="POST" action="{{ route('verification.verify') }}">
@@ -49,7 +46,21 @@
                 </div>
             </div>
         </div>
-
     </div>
-
+    <x-flash/>
 @endsection
+
+@push('js')
+    <script>
+        @if (session()->has('success'))
+        $(() => {
+            $('.toast').toast('show');
+        })
+        @elseif(session()->has('errors'))
+        $(() => {
+            $('.toast').toast('show').removeClass("border-success-subtle").addClass("border-danger-subtle");
+        })
+        @endif
+    </script>
+@endpush
+
