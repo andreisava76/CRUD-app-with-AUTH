@@ -21,6 +21,7 @@
     <link href="https://cdn.datatables.net/buttons/3.0.0/css/buttons.dataTables.css" rel="stylesheet">
 
     <!-- Styles -->
+    @stack('css')
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -52,6 +53,12 @@
                                 {{ __('View users') }}
                             </a>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('plans.index') }}">
+                            <span id="icon" class="material-icons align-middle">&#xea67;</span>
+                            {{ __('Plans') }}
+                        </a>
                     </li>
                 </ul>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\MicrosoftLoginController;
 use App\Http\Controllers\Auth\VerifyCodeController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\UserController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,8 @@ Route::group(["prefix" => "user", "as" => "user.", "middleware" => ["auth","veri
     Route::delete('/', 'destroy')->name('destroy')->middleware('can:admin');
     Route::patch('/', 'update')->name('update')->middleware('can:admin');
 });
+
+Route::get('plans', [PlanController::class, 'index'])->middleware(["auth","verify.code"])->name('plans.index');
 
 Route::get('/', function () {
     return Redirect::to(RouteServiceProvider::HOME);
