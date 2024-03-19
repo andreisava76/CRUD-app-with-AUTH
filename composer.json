@@ -11,12 +11,14 @@
         "php": "^8.0.2",
         "dcblogdev/laravel-microsoft-graph": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
+        "laravel/cashier": "14.x-dev",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "opcodesio/log-viewer": "^3.5",
+        "stripe/stripe-php": "^10.21",
         "yajra/laravel-datatables-oracle": "^10"
     },
     "require-dev": {

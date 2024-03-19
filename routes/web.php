@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\MicrosoftLoginController;
 use App\Http\Controllers\Auth\VerifyCodeController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\StripeCondtroller;
 use App\Http\Controllers\UserController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(["verify" => true]);
 
-Route::group(["prefix" => "user", "as" => "user.", "middleware" => ["auth","verify.code"], "controller" => UserController::class], function () {
+Route::group(["prefix" => "user", "as" => "user.", "middleware" => ["auth", "verify.code"], "controller" => UserController::class], function () {
     Route::get('/', 'index')->name('index');
     Route::get('create', 'create')->name('create')->middleware('can:admin');
     Route::post('/', 'store')->name('store')->middleware('can:admin');
@@ -30,7 +31,13 @@ Route::group(["prefix" => "user", "as" => "user.", "middleware" => ["auth","veri
     Route::patch('/', 'update')->name('update')->middleware('can:admin');
 });
 
-Route::get('plans', [PlanController::class, 'index'])->middleware(["auth","verify.code"])->name('plans.index');
+Route::group(["prefix" => "stripe", "as"=> 'stripe.',"middleware" => "auth", "controller"=> StripeCondtroller::class], function (){
+    Route::get('/{price}', 'index')->name('index');
+    Route::post('/charge', 'charge')->name('charge');
+    Route::get('/success', 'success')->name('success');
+});
+
+Route::get('plans', [PlanController::class, 'index'])->middleware("auth")->name('plans.index');
 
 Route::get('/', function () {
     return Redirect::to(RouteServiceProvider::HOME);
@@ -50,4 +57,4 @@ Route::post('verify', [VerifyCodeController::class, '__invoke'])
     ->middleware(['throttle:6,1'])
     ->name('verification.verify');
 
-Route::view('verification-notice','auth.verification-notice')->name('verification.notice');
+Route::view('verification-notice', 'auth.verification-notice')->name('verification.notice');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -37,5 +39,10 @@ return [
     ],
     'smso' => [
         'api_key' => env('SMSO_KEY'),
-    ]
+    ],
+    'stripe' => [
+        'model' => User::class,
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+    ],
 ];

@@ -23,7 +23,9 @@
                                     <li>Option 4</li>
                                 </ul>
                             </div>
-                            <a href="#">Order Now </a>
+                            <a href="{{ route('stripe.index',['price'=>'50'])}}">Order with Stripe</a>
+                            <a href="#">Order with Revolut</a>
+                            <a href="#">Order with BT Pay</a>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -42,7 +44,9 @@
                                     <li>Option 4</li>
                                 </ul>
                             </div>
-                            <a href="#">Order Now </a>
+                            <a href="{{ route('stripe.index',['price'=>'100'])}}">Order with Stripe</a>
+                            <a href="#">Order with Revolut</a>
+                            <a href="#">Order with BT Pay</a>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -61,7 +65,9 @@
                                     <li>Option 4</li>
                                 </ul>
                             </div>
-                            <a href="#">Order Now </a>
+                            <a href="{{ route('stripe.index',['price'=>'150'])}}">Order with Stripe</a>
+                            <a href="#">Order with Revolut</a>
+                            <a href="#">Order with BT Pay</a>
                         </div>
                     </div>
                 </div>
