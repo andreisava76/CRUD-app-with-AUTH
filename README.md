@@ -1,6 +1,6 @@
 
 
-This is a Laravel project with verifying your registered romanian phone number via SMS, after the registration. Once registered, you can view a list of users. You can login as admin with email: 'admin@test.com' and password 'password' to edit, delete or add new users.
+This is a Laravel project which verifies your registered romanian phone number via SMS, after the registration. Once registered, you can view a list of users. You can login as admin with email: 'admin@test.com' and password 'password' to edit, delete or add new users.
 
 ## Installation
 
